@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 여행 블로그</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="hero">
+        <img src="image/back.jpg.jpg" alt="배너 이미지">
+        <h1>나의 여행 블로그</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">홈</a></li>
+                <li><a href="ai.html">소개</a></li>
+                <li><a href="#blog">블로그</a></li>
+                <li><a href="#contact">연락처</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h2>나와 함께 세계를 탐험해요</h2>
+        <p>지구 곳곳의 모험에 함께 하세요.</p>
+    </section>
+
+    <section id="about">
+        <h2>소개</h2>
+        <p>안녕하세요! 저는 새로운 장소, 문화, 음식을 탐험하는 것을 사랑하는 여행 애호가입니다. 이 블로그를 통해 저의 여행 경험, 팁, 이야기를 공유합니다. 세상에서 가장 아름다운 목적지로의 여행을 함께하세요!</p>
+    </section>
+
+    
+    <section id="itinerary">
+        <h2>여행 일정표</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>날짜</th>
+                    <th>일정</th>
+                    <th>장소</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2024-09-01</td>
+                    <td>출발 및 호텔 체크인</td>
+                    <td>서울</td>
+                </tr>
+                <tr>
+                    <td>2024-09-02</td>
+                    <td>관광지 방문</td>
+                    <td>경복궁</td>
+                </tr>
+                <tr>
+                    <td>2024-09-03</td>
+                    <td>현지 음식 탐방</td>
+                    <td>명동</td>
+                </tr>
+                <tr>
+                    <td>2024-09-04</td>
+                    <td>자유 시간 및 쇼핑</td>
+                    <td>홍대</td>
+                </tr>
+                <tr>
+                    <td>2024-09-05</td>
+                    <td>귀국</td>
+                    <td>서울</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="blog">
+        <h2>최근 게시물</h2>
+        <div class="post">
+            <h3>발리의 아름다움을 발견하다</h3>
+            <p>발리는 숲으로 덮인 화산 산맥, 상징적인 계단식 논, 해변, 산호초로 유명한 인도네시아의 섬입니다...</p>
+            <a href="#">더 읽기</a>
+        </div>
+        <div class="post">
+            <h3>아이슬란드의 경이로움을 탐험하다</h3>
+            <p>아이슬란드는 화산, 간헐천, 온천, 용암 대지 등 극적인 풍경으로 정의되는 북유럽 섬 국가입니다...</p>
+            <a href="#">더 읽기</a>
+        </div>
+    </section>
+
+
+    <section id="contact">
+        <h2>연락하기</h2>
+        <form>
+            <label for="name">이름:</label>
+            <input type="text" id="name" name="name">
+            <label for="email">이메일:</label>
+            <input type="email" id="email" name="email">
+            <label for="message">메시지:</label>
+            <textarea id="message" name="message"></textarea>
+            <button type="submit">보내기</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 나의 여행 블로그. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+
+    <script>
+
+$(document).ready(function () {
+    $('#loading').hide();
+  });
+
+  function chatGPT() {
+    const api_key = "sk-LpwtgBuJ46vdLtNHQxyCT3Bl"  // <- API KEY 입력
+    const keywords = document.getElementById('keywords').value
+    $('#loading').show();
+
+    const messages = [
+      { role: 'system', content: 'You are a helpful assistant.' },
+      { role: 'user', content: keywords + '에 대하여 최대한 도움이 되는 답변을 해줘.' },
+    ]
+
+    const data = {
+      model: 'gpt-3.5-turbo',
+      temperature: 0.5,
+      n: 1,
+      messages: messages,
+    }
+
+    $.ajax({
+      url: "https://api.openai.com/v1/chat/completions",
+      method: 'POST',
+      headers: {
+        Authorization: "Bearer " +api_key+"bkFJVGC5YKqxjkjZ2jgvgkxp",
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify(data),
+    }).then(function (response) {
+      $('#loading').hide();
+      console.log(response)
+      let result = document.getElementById('result')
+      let pre = document.createElement('pre')
+
+      pre.innerHTML = "\n\n" + response.choices[0].message.content
+      result.appendChild(pre)
+
+      document.getElementById('keywords').value = ''
+    });
+  }
+
+    </script>
+</body>
+</html>
